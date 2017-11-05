@@ -186,29 +186,30 @@ def final_model():
 
 
 #
-# I wish I could train it fast. Butit took so long on aws.. 
+# I wish I could train it fast. But it took so long on aws.. 
 # I'm sure It will be better than others.
 #
-#def final_model():
-#    input_dim = 13
-#    units=500
-#    activation='relu'
-#    output_dim=29
-#
-#    input_data = Input(name='the_input', shape=(None, input_dim))
-#
-#    L1 =   Bidirectional( GRU(units, activation='relu', return_sequences=True, implementation=2, dropout=0.2, recurrent_dropout=0.2, name='L1'))(input_data)
-#    L2 =   Bidirectional( GRU(units, activation='relu', return_sequences=True, implementation=2, dropout=0.2, recurrent_dropout=0.2, name='L2'))(L1)
-#    L3 =   Bidirectional( GRU(units, activation='relu', return_sequences=True, implementation=2, dropout=0.2, recurrent_dropout=0.2, name='L2'))(L2)
-#
-#    time_dense = TimeDistributed(Dense(output_dim))(L3)
-#
-#    y_pred = Activation('softmax', name='softmax')(time_dense)
-#
-#
-#    # Specify the model
-#    model = Model(inputs=input_data, outputs=y_pred)
-#    model.output_length = lambda x: x
-#    print(model.summary())
-#
-#    return model
+# => Finally, I ran it on aws p3 instance!
+def final_model2():
+    input_dim = 13
+    units=500
+    activation='relu'
+    output_dim=29
+
+    input_data = Input(name='the_input', shape=(None, input_dim))
+
+    L1 =   Bidirectional( GRU(units, activation='relu', return_sequences=True, implementation=2, dropout=0.2, recurrent_dropout=0.2, name='L1'))(input_data)
+    L2 =   Bidirectional( GRU(units, activation='relu', return_sequences=True, implementation=2, dropout=0.2, recurrent_dropout=0.2, name='L2'))(L1)
+    L3 =   Bidirectional( GRU(units, activation='relu', return_sequences=True, implementation=2, dropout=0.2, recurrent_dropout=0.2, name='L2'))(L2)
+
+    time_dense = TimeDistributed(Dense(output_dim))(L3)
+
+    y_pred = Activation('softmax', name='softmax')(time_dense)
+
+
+    # Specify the model
+    model = Model(inputs=input_data, outputs=y_pred)
+    model.output_length = lambda x: x
+    print(model.summary())
+
+    return model
